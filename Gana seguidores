@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ganar Seguidores</title>
+
+<style>
+body {
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.boton {
+  background: linear-gradient(45deg, #ff0057, #ffae00);
+  color: white;
+  font-size: 26px;
+  font-weight: bold;
+  padding: 20px 35px;
+  text-decoration: none;
+  border-radius: 15px;
+  box-shadow: 0 0 25px #ff0057;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 15px #ff0057; }
+  to   { box-shadow: 0 0 30px #ffae00; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="boton"
+   href="instagram://user?username=chanxlist"
+   onclick="setTimeout(() => { window.location='https://www.instagram.com/chanxlist'; }, 500);">
+🔥 GANAR-SEGUIDORES!!!
+</a>
+
+</body>
+</html>
